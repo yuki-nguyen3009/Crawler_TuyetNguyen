@@ -4,6 +4,8 @@ class crawler
     protected $url;
     protected $path = 'D:/codeCamp/';
 
+    
+    # Get source of website
     public function getContent($url)
     {
         $handle = @curl_init();
@@ -37,7 +39,7 @@ class crawler
         return $rawLinks[1];
     }
 
-# fetch URLs from html and return array
+    # fetch URLs from html and return array
     public function getJS($url)
     {
         $contents = $this->getContent($url);
@@ -47,6 +49,8 @@ class crawler
         return $rawLinks[1];
     }
 
+    
+    # Replace path of css and js to index.html file
     public function getTemplate($url)
     {
         mkdir($this->path . '/files');
@@ -66,7 +70,9 @@ class crawler
                 }
 
                 $filename = 'files/' . end(explode('/', $templateLink));
-// Replace text in html file
+                
+                # Replace text in html file
+                
                 $html_data = str_replace($templateLink, $filename, $html_data);
 
                 $filePath = $this->path . $filename;
@@ -78,7 +84,8 @@ class crawler
 
         }
 
-// Save html file
+        # Save html file
+        
         $file = fopen($this->path . 'index.html', "w") or die("Unable to open file!");
         fwrite($file, $html_data);
         fclose($file);
@@ -86,6 +93,7 @@ class crawler
         echo "Done!";
     }
 
+    #check prefix of url's css file, js file
     function has_prefix($string, $prefix)
     {
         return ((substr($string, 0, strlen($prefix)) == $prefix) ? true : false);
@@ -94,5 +102,5 @@ class crawler
 }
 
 $crawler = new crawler();
-$crawler->getTemplate('https://v4-alpha.getbootstrap.com/');
+$crawler->getTemplate('https://v4-alpha.getbootstrap.com/'); // Test with url: https://v4-alpha.getbootstrap.com/
 //$link ->getTemplate();
