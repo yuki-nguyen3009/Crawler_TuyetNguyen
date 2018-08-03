@@ -54,7 +54,7 @@ class crawler
     public function getTemplate($url)
     {
         mkdir($this->path . '/files');
-        chmod($this->path . '/files', 0777);
+       
         $html_data = $this->getContent($url);
         $templateLinks = array_merge($this -> getCSS($url), $this->getJS($url));
 
